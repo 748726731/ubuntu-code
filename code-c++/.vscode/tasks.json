@@ -1,0 +1,115 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "① 编译当前文件",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++17",
+                "-O2",
+                "-Wall",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/运行/c++/${fileBasenameNoExtension}-exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "panel": "shared"
+            },
+            "detail": "把当前打开的 .cpp 编译成 code-c++/运行/c++/xxx-exe（不运行）"
+        },
+        {
+            "label": "② 运行当前文件（编译+运行）",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/build.sh\"",
+            "args": [
+                "run",
+                "${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "panel": "shared",
+                "focus": true
+            },
+            "detail": "编译当前文件并立刻运行，程序会在这个终端里等键盘输入"
+        },
+        {
+            "label": "调试编译当前文件",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/build.sh\"",
+            "args": [
+                "debug",
+                "${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "reveal": "silent",
+                "clear": true,
+                "panel": "shared"
+            },
+            "detail": "F5 调试前自动调用：用 -g -O0 把当前文件编译到 运行/c++/"
+        },
+        {
+            "label": "③ 编译全部改动过的源码",
+            "type": "shell",
+            "command": "\"${workspaceFolder}/build.sh\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "clear": true,
+                "panel": "shared"
+            },
+            "detail": "只重编改动过的文件，产物放进 运行/c++/"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++ 生成活动文件",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        }
+    ]
+}
