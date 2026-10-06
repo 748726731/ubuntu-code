@@ -48,9 +48,9 @@ int main() {
         }
         else if(a==8)
         {
-            for(auto a8=0;a8<v.size();a8++)//遍历输出
+            for(auto a8=v.begin();a8!=v.end();a8++)//遍历输出
             {
-                cout<<v[a8]<<" ";
+                cout<<*a8<<" ";
             }
             cout<<"\n";
         }
