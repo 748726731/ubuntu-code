@@ -37,6 +37,7 @@ int main()
             }
             else break;
         }
-        cout<<(in.empty()==1?"Yes":"No")<<endl;
+        cout<<(in.empty()==1?"Yes":"No")<<endl;//? ... : ...三元运算符
+        //in.empty()==1 条件 若是真的，则输出:前，若是假的，则输出冒号后
     }
 }
