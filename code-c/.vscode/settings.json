@@ -12,5 +12,6 @@
 
         // 终端里显示 UTF-8 中文，避免源码注释/程序输出乱码
         "terminal.integrated.defaultProfile.linux": "bash"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
