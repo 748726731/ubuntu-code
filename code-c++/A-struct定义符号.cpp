@@ -1,14 +1,15 @@
 #include <iostream>
 using namespace std;
+ bool operator <(const student &x,const student &y)//&是直接引用x，而非复制一个再用。
+    //const为锁住不改(student)x.name/chinese...
+    //在student类型的参数里，重构<,需要student参数两个
+    return x.sum<y.sum;
+    //此处const为不改(student)自己.name.chinese
+    //例如a<b 前const不改b.name/chinese.. 后一个不改a.nane/chinese..
 struct student
 {
     string name;
     int chinese,math,english,sum;
-    bool operator <(const student &x)//&是直接引用x，而非复制一个再用。//const为锁住不改(student)x.name/chinese...
-    const{
-        return sum<x.sum;
-    }//此处const为不改(student)自己.name.chinese
-    //例如a<b 前const不改b.name/chinese.. 后一个不改a.nane/chinese..
     student()
     {
         chinese=0,math=0,english=0,sum=0;
