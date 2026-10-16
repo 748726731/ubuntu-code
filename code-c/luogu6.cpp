@@ -2,31 +2,29 @@
 using namespace std;
 int main()
 {
-   int n;cin>>n;
-   string a;
-   cin>>a;
-   int a_cnt=0,b_cnt=0;
-   for(int i=0;i<n-1;i++)//找几组VK
+   string s;cin>>s;
+   int cnt_math=0;
+   int cnt_1=0,cnt_2=0;
+   string output;
+   for(int i=0;i<s.size();i++)
    {
-      if(a[i]='V')
-      {
-         if(a[i+1]=='K')a_cnt++;   
-      }
+      if(a[i]=='.'){cnt_math=1;cnt_1=i;}
+      if(a[i]=='/'){cnt_math=2;cnt_2=i}
+      if(a[i]=='%')cnt_math=3;
    }
-   for(int i=0;i<n;i++)
+   if(cnt_math==0);
    {
-      string b=a;
-      if(b[i]=='V')b[i]='K';
-      else{b[i]='V';}
-      for(int j=0;j<n-1;j++)//找几组VK
+      output=reverse(s.begin(),s.end());
+      while(output[0]=='0')
       {
-         if(b[j]='V')
-         {
-            if(b[j+1]=='K')b_cnt++;   
-         }
+         output.erase(output.begin());
       }
-      if(b_cnt>a_cnt)a_cnt=b_cnt;
-      b_cnt=0;
+      cout<<output;
    }
-   cout<<a_cnt;
+      if(cnt_math==1);
+   {
+      string output_10,output_11;
+      
+
+   }
 }
