@@ -28,7 +28,7 @@ int main(void)
             else{st.push(c*b);}
             }
         }
-        return st.top();
-    return 0;
+        cout<<st.top();
+    return 0;       
 
 }

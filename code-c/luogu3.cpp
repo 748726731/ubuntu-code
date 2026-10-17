@@ -3,7 +3,7 @@ using namespace std;
 int main()
 {
     int a,b,c;cin>>a>>b>>c;
-    string s;cin>>s;s
+    string s;cin>>s;
     int p[3];
     p[0]=max(a,max(b,c));
     p[2]=min(a,min(b,c));
