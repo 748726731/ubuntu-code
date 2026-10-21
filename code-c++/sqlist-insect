@@ -8,7 +8,7 @@ struct sqlist
 };
 bool insect(sqlist &a,int place,int number)
 {
-    if(a.length>=MAXSIZE)return false;
+    if(a.length+1>MAXSIZE)return false;
     if(place<1||place>a.length+1)return false;
     //例如length有五个元素，所以可以插在第五第六个元素上，
     //则place可以=a.length+1
@@ -18,6 +18,16 @@ bool insect(sqlist &a,int place,int number)
     }
     a.date[place-1]=number;
     a.length++;
+    return 1;
+}
+bool delet(sqlist &a,int place)
+{
+    if(place<1||place>a.length)return false;
+    for(int j=place-1;j+1<=a.length-1;j++)
+    {
+        a.date[j]=a.date[j+1];
+    }
+    a.length--;
     return 1;
 }
 int main()
@@ -37,7 +47,7 @@ int main()
         }
         i++;
     }
-    cout<<"你要进行什么操作(输入0结束)";
+    cout<<"你要进行什么操作";
     string operato;
     cin>>operato;
     if(operato=="insect")
@@ -49,5 +59,15 @@ int main()
         {bool x=insect(a[i-1],place,number);cout<<x;}
         else cout<<"没有这个表";
     }
-
+    else if(operato=="delet")
+    {
+        int i,place;
+        cout<<"依次输入表，删除的位置(1-length+1):";
+        cin>>i>>place;
+        if(i>=1&&i<=m)
+        {bool x=delet(a[i-1],place);cout<<x;}
+        else cout<<"没有这个表";
+    }
+    delete[] a;
+    return 0;
 }
