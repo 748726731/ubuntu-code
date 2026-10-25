@@ -13,6 +13,7 @@ int main()
  
     for(auto i:a)//range-for遍历
     //i的类型是pair(const string,int)
+    //i=*it=一整个格子(const string,int);
     //因此i.first=const string 改不了
     //i.second=int 可以改(需要加引用符号&)
     {
@@ -27,13 +28,15 @@ int main()
     }
 
    //map<string,int>a;a["a"]=82,a["A"]=81;
-   //string,int是pair,map a里有两个元素，分别是a["b"],a["B"].
+   //string,int是pair;map a里有两个元素，
+   //分别是a["b"]=82,a["B"]=81,b or B = key;81,82=value;
 
    //range-for的遍历,i是a的元素，元素只能用i.first
 
-   //迭代器的遍历，也就是指针的遍历,指针和迭代器可以用->
-   //因为指针和迭代器是地址，用了*就是指到元素，例如*it=a["b"]
-   //用了->就是指到元素的pair,例如it->first就是a["b"]的first个pair;
+   //it=地址,*it=一整个格子(string,int),
+   //(*it).first(second)=it->first(second)=key(value);
+   //a["b(B)"]=value;b(B)=key;
+
 
     //map类型重构了[]这个符号,所以
     ////operator[] 的语义是「查找，找不到就默认构造并插入」——int 的默认值是0

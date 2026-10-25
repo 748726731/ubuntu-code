@@ -1,83 +1,85 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define MAXSIZE 50
-typedef struct
-{
-    char cn[MAXSIZE+2];//[0]不用，用[1]-[50]
+#define MAXSIZE 52
+typedef struct{
+    char cn[MAXSIZE];
     int length;
-}SString;//顺序
-//----------------------------BF-------------------------------------
-int BFsubstring(SString s,SString c)
+}sstring;
+//---------------------------------------------------------------------------
+int BF2(sstring s,sstring c)
 {
     int i=1,j=1;
-    while(true)
+    while(i<=s.length)
     {
-        if(s.cn[i]==c.cn[j])
+        if(i==(j-1)+c.length-1>s.length)return -1;//超出了返回-1
+        if(s.cn[i]==c.cn[j]){i++;j++;}
+        else if(j==1){i++;}//子串首字符与i不匹配，i挪
+        else//子串后续字符与i不匹配，子串挪一位
         {
-            i++;j++;
+            j--;//失配
+            while(j>1&&i-(j-1)+c.length-1<=s.length)
+            {
+                int check=2;
+                for(int jj=1,ii=i-j+1;jj<j&&ii<i;jj++,ii++)
+                {
+                    if(s.cn[ii]!=c.cn[jj]){check=3;break;}
+                }
+                if(check==2)break;
+                j=j-1;//子串挪一格
+            }
         }
-        else
-        {
-            i=i-(j-1)+1;
-            j=1;
-            //j是1基,j=移动的次数+1,i应该等于i-移动的次数+1
-        }
-        if(j>c.length)return i-(j-1);
-        if(i-(j-1)+c.length-1>s.length)return -1;
+        if(j>c.length)return i-(j-1);else return -1;
     }
 }
-//--------------------------next---------------------------------------------------------
-vector<int> getNext(SString c)//引用直接改子串，加next数组进去
+//---------------------------------------------------------------------------------
+vector<int> getnext(sstring c)
 {
-    vector<int>nxt(c.length+2,0);//下标0不用，要往后加一个格子,因此c.length个元素
-    //要用1-c.length的格子，c.length+1为了防止匹配成功后崩溃
+    vector<int>nxt(c.length+2,0);//
     nxt[1]=0;nxt[2]=1;
     for(int j=3;j<=c.length;j++)
     {
         int best=0;
-        for(int len=(j-1)-1;len>=1;len--)//例如j=6,前面字符串有5个数,5=j-1,前后缀长度<字符串长度,=(j-1)-1
+        for(int len=j-2;len>=1;len--)//前后缀长度
         {
-            bool ok=true;
-            for(int k=1;k<=len;k++)//k是前缀指针
+            int check=2;
+            int head=1,tail=j-1;
+            deque<char>head0,tail0;
+            for(int x=head;x<=len;x++)
             {
-                if(c.cn[k]!=c.cn[(j-len)+(k-1)])
-                //c[12345] 的尾，j指到5,长度 len=2，终点是 4
-                //起点 = 4 - 2 + 1 = 3 = j - len
-                //k-1=偏移长度,k=1时还是ababd(j指到d)k->a,未偏移
-                {ok=false;break;}
+                head0.push_back(c.cn[x]);
             }
-            if(ok==true){best=len;break;}
+             for(int x=tail;x>=(j-1)-len+1;x--)
+            {
+                tail0.push_front(c.cn[x]);
+            }
+            if(head0!=tail0)check=3;
+            if(check==2){best=len;break;}
         }
-        nxt[j]=best+1;
-    } 
+        nxt[j]=1+best;
+    }
     return nxt;
-
 }
-//--------------------------KMP------------------------------
-int KMPsubstring(SString s,SString c)
+//-------------------------------------------------------------------------
+int KMP(sstring s,sstring c)
 {
-    vector<int>nxt=getNext(c);
+    vector<int>nxt=getnext(c);
     int i=1,j=1;
-    while((i-(j-1)+c.length-1<=s.length)&&j<=c.length)
+    while(i-j+1+c.length-1<=s.length&&j<=c.length)
     {
         if(s.cn[i]==c.cn[j]){i++;j++;}
-        else if(j>1)j=nxt[j];//不等且第一位匹配成功
-        else i++;//不等且第一位匹配失败;
+        else if(s.cn[i]!=c.cn[j]&&j>1){j=nxt[j];}
+        else if(s.cn[i]!=c.cn[j]&&j==1){i++;}
     }
-    return j==c.length+1?i-j+1:-1;
-    //i=起点+(c.length-1){i起点和j起点重叠因此-1}+1(又往后诺了一位)
-    //j=c.length+1;
-    //返回：判断是否全部匹配成功，
+    return j>c.length?i-j+1:-1;
 }
-//-----------------------main---------------------------------
+//----------------------------------------------------------------------
 int main()
 {
-    SString s,c;
-    cin>>&s.cn[1]>>&c.cn[1];
+    sstring s,c;
+    cin>>&s.cn[1];
+    cin>>&c.cn[1];
     s.length=strlen(s.cn+1);
     c.length=strlen(c.cn+1);
-    cout<<BFsubstring(s,c)<<'\n';
-    cout<<KMPsubstring(s,c)<<'\n';
+    int i=KMP(s,c);
+    cout<<i;
 }
-//BF->O(s.length * c.length)
-//KMP->O()

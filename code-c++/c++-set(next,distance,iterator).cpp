@@ -9,7 +9,9 @@ int main()
     set<int>::iterator set_it;
     set_it=s.insert(1).first;
     cout<<distance(s.begin(),set_it)<<endl;
-    //输出集合里的1的位置
+    //因为集合里有1了，所以不做任何操作，直接返回pair(iterator,bool)
+    //pair.first输出集合里的1的位置(迭代器)
+    
     set_it=s.insert(4).first;
     cout<<distance(s.begin(),set_it)<<endl;
     //输出插入的4的位置.
@@ -27,6 +29,21 @@ int main()
     set<int>::iterator it;//设一个it迭代器，是set类型的
     it=next(s.begin(),4);//it迭代器等于s.begin()往后走四步
     s.insert(it,4);//把4插入，自动排序，从it开始找位置
+
+   /*[ 小于 x ]  [ 等于 x ]  [ 大于 x ]
+               ↑          ↑
+      lower_bound   upper_bound*/ 
+
+      //例如集合135，我lower_bound(4)upper_bouud(4)
+      //都是指的5
+      //lower=集合里第一个不小于4的数，lower>=4 lower=5
+      //lower_bound=下界，
+      //upper=集合里第一个大于4的数,upper>4 upper=5
+
+      /*
+      [3]       [4]       [5]
+            ↑          ↑
+      lower_bound   upper_bound*/
 
     for(auto i:s)
     {
