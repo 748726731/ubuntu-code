@@ -40,4 +40,5 @@ int main()
     cin>>&c.cn[1];
     s.length=strlen(s.cn+1);
     c.length=strlen(c.cn+1);
+    cout<<KMP(s,c);
 }
