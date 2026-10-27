@@ -1,25 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
-struct Listnode
-{
-    string name;
-    Listnode* next;
-    Listnode(string na):name(na),next(nullptr){}
-    Listnode():name(),next{nullptr}{}
+struct ListNode{
+    int Data;
+    ListNode* next,*prev;
 };
-int main(){
-    Listnode *head=new Listnode();
-    Listnode* tail=head;
+int main()
+{
     int n;cin>>n;
+    ListNode *head=nullptr;
+    ListNode *tail=head;
     for(int i=0;i<n;i++)
     {
-        string name;cin>>name;
-        Listnode *p=new Listnode(name);
-        tail->next=p;
-        tail=p;
+        int data;cin>>data;
+        ListNode *p=new ListNode();
+        p->Data=data;p->next=p->prev=nullptr;
+        if(head==nullptr)
+        {
+            head=tail=p;
+        }
+        else
+        {
+            tail->next=p;
+            p->prev=tail;
+            tail=p;
+        }
     }
-    for(Listnode *i=head->next;i!=nullptr;i=i->next)
+    int cnt=1;
+    while(true)
     {
-        cout<<i->name<<endl;
+        ListNode *output=head;
+        cout<<head->Data;
+        if(cnt==2){head=head->prev;}
+        else if(cnt==1){head=head->next;}
+        if(cnt==1&&head->next==nullptr){cnt=2;}
+        else if(cnt==2&&head==nullptr)break;
+        
     }
 }
